@@ -114,8 +114,16 @@ while nnz(remainingEdgeMap) && nbCheckedEdges < args.MaxNbEdges
     end
 
     % check the color difference
-    colorDiff = sum((meanRegionColor(:,1) - meanRegionColor(:,2)).^2);  
-    if colorDiff < colorDiffThreshold^2
+    %colorDiff = sum((meanRegionColor(:,1) - meanRegionColor(:,2)).^2);  
+    %if colorDiff < colorDiffThreshold^2
+    %    myfprintf(args.Verbose, 'Color difference test failed\n');
+    %    continue;
+    %end
+    colorDiff_r = sum((meanRegionColor(1,1) - meanRegionColor(1,2)).^2);  
+    colorDiff_g = sum((meanRegionColor(2,1) - meanRegionColor(2,2)).^2);
+    colorDiff_b = sum((meanRegionColor(3,1) - meanRegionColor(3,2)).^2);
+    colorDiff  = [colorDiff_r;colorDiff_g;colorDiff_b];
+    if colorDiff_r < colorDiffThreshold^2 || colorDiff_g < colorDiffThreshold^2 || colorDiff_b < colorDiffThreshold^2
         myfprintf(args.Verbose, 'Color difference test failed\n');
         continue;
     end
